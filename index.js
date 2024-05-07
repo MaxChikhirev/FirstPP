@@ -1,14 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
 const app = express();
+const path = require('path');
 
-app.use('/src/pages', express.static(path.join(__dirname, 'public/src/pages')));
-app.use('/styles', express.static(path.join(__dirname, 'public/styles')));
-app.use('/scripts', express.static(path.join(__dirname, 'public/scripts')));
+
 app.use(bodyParser.json());
 
-const products = [
+/* const products = [
    {
       id: 1,
       name: 'phone',
@@ -20,19 +18,29 @@ const products = [
       price: 700
    }
 ];
-
-app.get('/', (req, res) => {
-   res.send('Hello World!');
-});
 app.get('/products', (req,res) => res.json(products));
 app.post('/products', (req,res) => {
    products.push(req.body);
    res.json(req.body);
+}); */
+
+app.set('view engine', 'ejs');
+
+// Указываем, где Express должен искать шаблоны
+app.set('views', path.join(__dirname, 'my_online_shop', 'src', 'pages'));
+
+
+// БЛОК Страничек
+app.get('/', (req, res) => {
+   res.render('home', { title: 'Главная страница' });
 });
 
+app.get('/about', (req, res) => {
+   res.render('about', { title: 'О нас' });
+});
 
+// КОНЕЦ Блока страничек
 
-app.get('/', (req, res) => res.send('Привет мир123!'));
 
 app.listen (3000, () => console.log ('Listening on port 3000...'));
 
