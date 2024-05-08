@@ -44,14 +44,14 @@ app.get('/about', (req, res) => {
 // КОНЕЦ Блока страничек
 
 
-app.listen (3000, () => console.log ('Listening on port 3000...'));
+app.listen(3000, () => console.log('Listening on port 3000...'));
 
 const db = require('./dbConfig');
 
 db.query('SELECT NOW()', (err, res) => {
- if (err) {
-    console.error(err);
-    return;
- }
- console.log('Current time:', res.rows[0].now);
+   if (err) {
+      console.error(err);
+      return;
+   }
+   console.log('Current time:', res.rows[0].now);
 });

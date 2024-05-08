@@ -7,3 +7,8 @@ export default [
   {languageOptions: { globals: globals.browser }},
   pluginJs.configs.recommended,
 ];
+
+export const globals = {
+  "__dirname": "readonly",
+  ...globals
+ };
