@@ -29,6 +29,8 @@ app.set('view engine', 'ejs');
 // Указываем, где Express должен искать шаблоны
 app.set('views', path.join(__dirname, 'my_online_shop', 'src', 'pages'));
 
+app.use(express.static('public'))
+
 
 // БЛОК Страничек
 app.get('/', (req, res) => {
