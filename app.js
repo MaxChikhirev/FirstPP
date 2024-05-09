@@ -9,8 +9,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'my_online_shop', 'src', 'pages'));
 
 app.use(router);
-app.use(express.static('public'));
-app.use(express.static('styles'));
+app.use(express.static(path.join(__dirname, 'my_online_shop', 'src', 'pages', 'views')));
 
 /* app.use(bodyParser.json());
 
