@@ -1,0 +1,40 @@
+header {
+    position: fixed; /* Фиксированное положение */
+    top: 0;
+    left: 0;
+    width: 100%; /* Ширина равна 100% */
+    background-color: #333; /* Цвет фона */
+    color: #fff; /* Цвет текста */
+    padding: 10px 0; /* Поля вокруг текста */
+    box-sizing: border-box; /* Включает padding и border в общую ширину */
+  }
+  
+  .header-content {
+    max-width: 1200px; /* Максимальная ширина контента */
+    margin: 0 auto; /* Центрирование */
+    display: flex; /* Использование flexbox для расположения элементов */
+    justify-content: space-between; /* Расположение элементов с равным расстоянием */
+    align-items: center; /* Выравнивание по вертикали */
+  }
+  
+  .search-form {
+    display: flex; /* Использование flexbox для расположения элементов */
+    align-items: center; /* Выравнивание по вертикали */
+  }
+  
+  .search-form input {
+    flex-grow: 1; /* Расширение поля ввода */
+    margin-right: 10px; /* Отступ справа */
+    padding: 5px; /* Поля вокруг текста */
+    border: 1px solid #ccc; /* Граница поля */
+    border-radius: 3px; /* Радиус границы */
+  }
+  
+  .search-form button {
+    background-color: #007bff; /* Цвет фона кнопки */
+    color: #fff; /* Цвет текста кнопки */
+    border: none; /* Убираем границу */
+    padding: 5px 10px; /* Поля вокруг текста */
+    cursor: pointer; /* Изменяем курсор на указатель при наведении */
+    border-radius: 3px; /* Радиус границы */
+  }
