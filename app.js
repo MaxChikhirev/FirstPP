@@ -1,35 +1,32 @@
-const { PORT, path, app, bodyParser, express } = require('./constants/constants');
+const { PORT, path, app, bodyParser, express, MongoDB_NAME, MongoDB_port } = require('./constants/constants');
 const db = require('./dbConfig');
 const { router } = require('./routes/routes');
-
+const mongoose = require('mongoose');
 
 app.set('view engine', 'ejs');
-
-// Указываем, где Express должен искать шаблоны
 app.set('views', path.join(__dirname, 'my_online_shop', 'views'));
-
 app.use(router);
 app.use(express.static(path.join(__dirname, 'my_online_shop', 'public')));
+app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.json());
 
-/* app.use(bodyParser.json());
+// Подключение к MongoDB
+async function init() {
 
-const products = [
-   {
-      id: 1,
-      name: 'phone',
-      price: 300
-   },
-   {
-      id: 2,
-      name: 'tablet',
-      price: 700
+   try {
+     await mongoose.connect(`mongodb://0.0.0.0:27017/${MongoDB_NAME}`);
+     console.log(`[mongo] Connected to database success: ${MongoDB_NAME}`);
+   } catch (e) {
+     console.log('[error] Cannot connect to database', e);
    }
-];
-app.get('/products', (req,res) => res.json(products));
-app.post('/products', (req,res) => {
-   products.push(req.body);
-   res.json(req.body);
-}); */
+ 
+   const server = app.listen(MongoDB_port, () => {
+     console.log(`[express] Server started at http://localhost:${MongoDB_port}/`);
+   });
+ 
+ }
+ 
+ init();
 
 
 

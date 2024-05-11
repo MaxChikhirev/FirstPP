@@ -1,0 +1,11 @@
+.todos__item_button-action {
+  border: none;
+  background-color: transparent;
+  color: #ffde70;  
+  transition: .5s ease;
+}
+
+.todos__item_button-action:hover {
+  cursor: pointer;
+  color: #fd8f00;
+}
