@@ -1,17 +1,29 @@
 const { PORT, path, app, bodyParser, express } = require('./constants/constants');
 const db = require('./dbConfig');
 const { router } = require('./routes/routes');
-
+// const mongoose = require('mongoose');
 
 app.set('view engine', 'ejs');
-
-// Указываем, где Express должен искать шаблоны
-app.set('views', path.join(__dirname, 'my_online_shop', 'src', 'pages'));
-
+app.set('views', 'my_online_shop/views');
 app.use(router);
-app.use(express.static(path.join(__dirname, 'my_online_shop', 'src', 'pages', 'views')));
-app.use(express.static(path.join(__dirname, 'my_online_shop', 'src', 'pages', 'views')));
+app.use(express.static('public'));
 
+
+// Planner app
+ 
+/* app.use(bodyParser.urlencoded({ extended: false }));
+
+ app.use(bodyParser.json()); */
+
+
+ /* async function init() {
+
+   try {
+     await mongoose.connect(`mongodb://0.0.0.0:27017/${DB_NAME}`);
+     console.log(`[mongo] Connected to database success: ${DB_NAME}`);
+   } catch (e) {
+     console.log('[error] Cannot connect to database', e);
+   } */
 
 
 /* app.use(bodyParser.json());

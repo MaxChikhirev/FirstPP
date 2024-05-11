@@ -13,12 +13,15 @@ router.get('/', (req, res) => {
  
  
  // Ниже ссылки на Веб сайт с заметками
- router.get('/planner', (req, res) => {
-   res.render('index', { title: '' });
+ router.get('/planner', (req, res, next) => {
+   res.render('planner_main', {});
 });
-router.post('/planner/new', (req, res) => {
-   res.render('new', { title: '' });
+
+router.get('/planner/new', (req, res, next) => {
+   res.render('planner_new', {});
 });
+
+
 
  module.exports = {
     router
