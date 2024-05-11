@@ -6,10 +6,10 @@ const { router } = require('./routes/routes');
 app.set('view engine', 'ejs');
 
 // Указываем, где Express должен искать шаблоны
-app.set('views', path.join(__dirname, 'my_online_shop', 'src', 'pages'));
+app.set('views', path.join(__dirname, 'my_online_shop', 'views'));
 
 app.use(router);
-app.use(express.static(path.join(__dirname, 'my_online_shop', 'src', 'pages', 'views')));
+app.use(express.static(path.join(__dirname, 'my_online_shop', 'public')));
 
 /* app.use(bodyParser.json());
 
