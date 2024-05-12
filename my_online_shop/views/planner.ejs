@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;700&family=REM:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles/planner_styles/index.css">
-
   <title>Мой список дел</title>
 </head>
 <body class="body">
@@ -43,72 +42,37 @@
       <div class="wellcome">
         <h1>Список дел</h1>
         <p class="wellcome__text">
-          Привет! Давай составим список дел, <br>чтобы ничего не забыть!
+          Привет Давай составим список дел, <br>чтобы ничего не забыть!
         </p>
         <img src="/images/bg.svg" alt="" class="wellcome__img">
       </div>
       <div class="todos">
-        <ul class="todos__list">
-          <li class="todos__item">
-            <form action="/delete/1" method="post" class="todos__item_form-delete">
-              <input type="hidden" name="_id" value="1">
-              <button type="submit" class="todos__item_button-action">
-                <span class="material-symbols-outlined">
-                  delete
-                </span>
-              </button>
-            </form>
-            <form action="/complete/1" method="post" class="todos__item_form-todo">
-              <input type="hidden" name="_id" value="1">
-              <div class="todos__item_form-text">
-                Покормить кошку
-              </div>
-              <button type="submit" class="todos__item_button-action">
-                <span class="material-symbols-outlined">
-                  circle
-                </span>
-              </button>
-            </form>
-          </li>
-          <li class="todos__item">
-            <form action="/delete/1" method="post" class="todos__item_form-delete">
-              <button type="submit" class="todos__item_button-action">
-                <span class="material-symbols-outlined">
-                  delete
-                </span>
-              </button>
-            </form>
-            <form action="/complete/1" method="post" class="todos__item_form-todo">
-              <div class="todos__item_form-text">
-                Выгулять собаку
-              </div>
-              <button type="submit" class="todos__item_button-action">
-                <span class="material-symbols-outlined">
-                  circle
-                </span>
-              </button>
-            </form>
-          </li>
-          <li class="todos__item todos__item_complited">
-            <form action="/delete/1" method="post" class="todos__item_form-delete">
-              <button type="submit" class="todos__item_button-action">
-                <span class="material-symbols-outlined">
-                  delete
-                </span>
-              </button>
-            </form>
-            <form action="/complete/1" method="post" class="todos__item_form-todo">
-              <div class="todos__item_form-text">
-                Наконец-таки поправить вертстку сайта и разобраться как же работает этот замечательный Javascript.
-              </div>
-              <button type="submit" class="todos__item_button-action">
-                <span class="material-symbols-outlined">
-                  check_circle
-                </span>
-              </button>
-            </form>
-          </li>
-        </ul>
+        <% if(list.length) { %>
+          <ul class="todos__list">
+            <% list.forEach(function(item) { %>
+              <li class="todos__item">
+                <form action="/delete/<%= item.id %>" method="post" class="todos__item_form-delete">
+                  <input type="hidden" name="_id" value="<%= item.id %>">
+                  <button type="submit" class="todos__item_button-action">
+                    <span class="material-symbols-outlined">
+                      delete
+                    </span>
+                  </button>
+                </form>
+                <form action="/complete/<%= item.id %>" method="post" class="todos__item_form-todo">
+                  <div class="todos__item_form-text">
+                    <%= item.name %>
+                  </div>
+                  <button type="submit" class="todos__item_button-action">
+                    <span class="material-symbols-outlined">
+                      circle
+                    </span>
+                  </button>
+                </form>
+              </li>
+            <% }); %>
+          </ul>
+        <% } %>
       </div>
     </div>
   </main>

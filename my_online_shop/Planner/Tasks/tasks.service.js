@@ -11,12 +11,14 @@ constructor() {
 
 
 addTask(name) {
-return this.tasksModel.create({
-    name
-});
+return this.tasksModel.create({ name });
 }
 
-
+getList() {
+    return this.tasksModel.find().sort({
+        'createdAt': -1
+    }).exec();
+}
 }
 
 

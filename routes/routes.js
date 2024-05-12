@@ -6,37 +6,68 @@ const router = Router();
 const tasksService = new TasksService();
 
 router.get('/', (req, res) => {
-    res.render('home', { title: 'Главная страница' });
- });
- 
- router.get('/about', (req, res) => {
-    res.render('about', { title: 'О нас' });
- });
-
- // Далее planner app расписан
- router.get('/planner', (req, res) => {
-   res.render('planner', {});
+   res.render('home', { title: 'Главная страница' });
 });
 
-router.get('/planner/new', (req, res) => {
-   res.render('planner_new', {});
+router.get('/about', (req, res) => {
+   res.render('about', { title: 'О нас' });
 });
 
-router.post('/planner/new', async (req, res, next) => {
-const {text} = req.body;
-console.log(text);
+// Далее planner app расписан
+router.get('/planner', async (req, res, next) => {
 
-//const newTask = await tasksService.addTask(text);
-//res.redirect('/planner');
+   const rawList = await tasksService.getList();
+   const list = rawList.map((el) => {
+      return {
+         name: el.name,
+         id: el.id.toString(),
+         completed: el.completed,
+         createdAt: new Date(el.createdAt).toLocaleString('ru-RU'),
+         completedClass: el.completed ? 'todos_item_complited' : ''
+      }
+   })
+   res.render('planner', { list });
 });
 
-router.post('/complete', (req, res, next) => {
-   res.send({
-      ok: 'complete task'
+router.get('/planner/new', async (req, res, next) => {
+   res.render('planner_new', {
+      title: 'Создать новое дело',
+      description: 'Создать новое дело в приложении Список дел',
+      h1: 'Создать новое дело',
+      text: 'Привет! Давай создадим новое дело, <br>чтобы не забыть его!',
    });
+
+});
+
+router.post('/planner/add', async (req, res, next) => {
+   console.log(req.body)
+   const { text } = req.body;
+   const newTask = await tasksService.addTask(text);
+   res.redirect('/planner');
+
+});
+
+// дальше пока просто добавил
+
+router.post('/planner/complete', async (req, res, next) => {
+
+   const { id } = req.body;
+
+   await tasksService.toggleComplete(id);
+
+   res.redirect('/planner');
+
+});
+
+router.post('/planner/delete', async (req, res, next) => {
+   const { id } = req.body;
+
+   const newTask = await tasksService.delete(id);
+   res.redirect('/planner');
+
 });
 
 
- module.exports = {
-    router
- }; 
+module.exports = {
+   router
+}; 
