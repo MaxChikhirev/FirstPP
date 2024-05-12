@@ -5,7 +5,8 @@ const path = require('path');
 const pgsql_port = 5432
 const MongoDB_NAME = 'First_PP_MongoDB'
 const MongoDB_port = 27017
+const bodyParser = require('body-parser');
 
 module.exports = {
-    PORT, express, app, path, pgsql_port, MongoDB_NAME, MongoDB_port
+    PORT, express, app, path, pgsql_port, MongoDB_NAME, MongoDB_port, bodyParser
 }

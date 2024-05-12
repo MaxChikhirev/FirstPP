@@ -1,9 +1,9 @@
 const { Router } = require("express");
-const { TasksService } = require("../my_online_shop/Planner/Tasks/tasks.service");
+const { TodosService } = require("../Черновик/todos/todos.service");
 
 const router = Router();
 
-const tasksService = new TasksService();
+const todosService = new TodosService();
 
 router.get('/', (req, res) => {
    res.render('home', { title: 'Главная страница' });
@@ -16,7 +16,7 @@ router.get('/about', (req, res) => {
 // Далее planner app расписан
 router.get('/planner', async (req, res, next) => {
 
-   const rawList = await tasksService.getList();
+   const rawList = await todosService.getList();
    const list = rawList.map((el) => {
       return {
          name: el.name,
@@ -40,11 +40,9 @@ router.get('/planner/new', async (req, res, next) => {
 });
 
 router.post('/planner/add', async (req, res, next) => {
-   console.log(req.body)
-   const { text } = req.body;
-   const newTask = await tasksService.addTask(text);
+   const { texto } = req.body;
+   const newTask = await todosService.addTask(texto);  
    res.redirect('/planner');
-
 });
 
 // дальше пока просто добавил
@@ -53,7 +51,7 @@ router.post('/planner/complete', async (req, res, next) => {
 
    const { id } = req.body;
 
-   await tasksService.toggleComplete(id);
+   await todosService.toggleComplete(id);
 
    res.redirect('/planner');
 
@@ -62,7 +60,7 @@ router.post('/planner/complete', async (req, res, next) => {
 router.post('/planner/delete', async (req, res, next) => {
    const { id } = req.body;
 
-   const newTask = await tasksService.delete(id);
+   const newTask = await todosService.delete(id);
    res.redirect('/planner');
 
 });

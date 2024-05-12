@@ -1,15 +1,15 @@
-const { PORT, path, app, express, MongoDB_NAME, MongoDB_port } = require('./constants/constants');
+const { PORT, path, app, express, MongoDB_NAME, MongoDB_port, bodyParser } = require('./constants/constants');
 const db = require('./dbConfig');
 const { router } = require('./routes/routes');
 const mongoose = require('mongoose');
+
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'my_online_shop', 'views'));
 app.use(router);
 app.use(express.static(path.join(__dirname, 'my_online_shop', 'public')));
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Подключение к MongoDB
 async function init() {
