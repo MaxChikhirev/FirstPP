@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'my_online_shop', 'views'));
-app.use(router);
+
 app.use(express.static(path.join(__dirname, 'my_online_shop', 'public')));
 
 app.use(express.urlencoded({ extended: true }));
@@ -13,21 +13,21 @@ app.use(express.json());
 
 // Подключение к MongoDB
 async function init() {
+  try {
+    await mongoose.connect(`mongodb://0.0.0.0:27017/${MongoDB_NAME}`);
+    console.log(`[mongo] Connected to database success: ${MongoDB_NAME}`);
+    // Correctly assign the database connection to app.locals.mongo_db
+    app.locals.mongo_db = mongoose.connection;
+  } catch (e) {
+    console.log('[error] Cannot connect to database', e);
+  }
 
-   try {
-     await mongoose.connect(`mongodb://0.0.0.0:27017/${MongoDB_NAME}`);
-     console.log(`[mongo] Connected to database success: ${MongoDB_NAME}`);
-   } catch (e) {
-     console.log('[error] Cannot connect to database', e);
-   }
- 
-   const server = app.listen(MongoDB_port, () => {
-     console.log(`[express] Server started at http://localhost:${MongoDB_port}/`);
-   });
- 
- }
- 
- init();
+  const server = app.listen(MongoDB_port, () => {
+    console.log(`[express] Server started at http://localhost:${MongoDB_port}/`);
+  });
+}
+
+init();
 
 
 
@@ -42,3 +42,5 @@ db.query('SELECT NOW()', (err, res) => {
    }
    console.log('Current time:', res.rows[0].now);
 });
+
+app.use(router);
