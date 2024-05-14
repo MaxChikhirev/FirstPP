@@ -51,24 +51,24 @@
                     <ul class="todos__list">
                         <% list.forEach(function(task) { %>
                             <li class="todos__item">
-                                <form action="/delete/<%= task._id %>" method="post" class="todos__item_form-delete">
-                                    <input type="hidden" name="_id" value="<%= task._id %>">
-                                    <button type="submit" class="todos__item_button-action">
-                                        <span class="material-symbols-outlined">
-                                            delete
-                                        </span>
-                                    </button>
-                                </form>
-                                <form action="/complete/<%= task._id %>" method="post" class="todos__item_form-todo">
-                                    <div class="todos__item_form-text">
-                                        <%= task.name %>
-                                    </div>
-                                    <button type="submit" class="todos__item_button-action">
-                                        <span class="material-symbols-outlined">
-                                            circle
-                                        </span>
-                                    </button>
-                                </form>
+                              <form action="/planner/delete/<%= task._id %>" method="delete" class="todos__item_form-delete">
+                                <button type="submit" class="todos__item_button-action">
+                                    <span class="material-symbols-outlined">
+                                        delete
+                                    </span>
+                                </button>
+                            </form>
+                                <form action="/planner/complete" method="post" class="todos__item_form-todo">
+                                  <input type="hidden" name="id" value="<%= task._id %>">
+                                  <div class="todos__item_form-text">
+                                      <%= task.name %>
+                                  </div>
+                                  <button type="submit" class="todos__item_button-action">
+                                      <span class="material-symbols-outlined">
+                                          circle
+                                      </span>
+                                  </button>
+                              </form>
                             </li>
                         <% }); %>
                     </ul>

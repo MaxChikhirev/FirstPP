@@ -1,7 +1,7 @@
-const { PORT, path, app, express, MongoDB_NAME, MongoDB_port } = require('./constants/constants');
+const { PORT, path, app, express, MongoDB_NAME, MongoDB_port, mongoose } = require('./constants/constants');
 const db = require('./dbConfig');
 const { router } = require('./routes/routes');
-const mongoose = require('mongoose');
+
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'my_online_shop', 'views'));

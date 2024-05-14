@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { app } = require('../constants/constants');
+const { app, mongoose } = require('../constants/constants');
 
 const router = Router();
 
@@ -54,17 +54,19 @@ router.post('/planner/add', (req, res) => {
 });
 
 router.post('/planner/complete', (req, res) => {
-   const { id } = req.body;
-   // Assuming 'mycollection' is the name of your collection where tasks are stored
+   console.log(req.body); 
+   const { id } = req.body.id;
+   console.log('Updating task with ID:', id); // Логирование ID задачи
    app.locals.mongo_db.collection('mycollection').updateOne(
-       { _id: mongoose.Types.ObjectId(id) }, // Convert string ID to ObjectId
-       { $set: { completed: true } }, // Set the 'completed' field to true
+       { _id: new mongoose.Types.ObjectId(id) },
+       { $set: { completed: true } },
        (err, result) => {
            if (err) {
                console.error(err);
                return res.status(500).send('Error updating task');
            }
            if (result.matchedCount === 0) {
+               console.log('No task found with ID:', id); // Логирование, если задача не найдена
                return res.status(404).send('Task not found');
            }
            res.redirect('/planner');
@@ -72,14 +74,18 @@ router.post('/planner/complete', (req, res) => {
    );
 });
 
-/* router.post('/planner/delete', async (req, res, next) => {
-   const { id } = req.body;
+router.delete('/planner/delete/:id', async (req, res, next) => {
+   const { id } = req.params;
 
-   const newTask = await tasksService.delete(id);
-   res.redirect('/planner');
-
-}); */
-
+   try {
+       await app.locals.mongo_db.collection('mycollection').deleteOne({ _id: new mongoose.Types.ObjectId(id) });
+       console.log(`Task with ID ${id} deleted successfully.`);
+       res.redirect('/planner');
+   } catch (err) {
+       console.error('Error deleting task:', err);
+       res.status(500).send('Error deleting task');
+   }
+});
 
 module.exports = {
    router
